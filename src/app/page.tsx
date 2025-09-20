@@ -28,8 +28,9 @@ export default function Home() {
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
       setCards(data.cards);
-    } catch (err: any) {
-      setError(err.message ?? "Request failed");
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Request failed";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
